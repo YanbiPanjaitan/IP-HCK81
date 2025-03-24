@@ -18,6 +18,9 @@ module.exports = {
       region: {
         type: Sequelize.STRING
       },
+      population: {
+        type: Sequelize.INTEGER
+      },
       flagUrl: {
         type: Sequelize.STRING
       },
