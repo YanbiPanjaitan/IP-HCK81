@@ -21,6 +21,16 @@ module.exports = {
       mapUrl: {
         type: Sequelize.STRING,
       },
+      latitude: {
+        type: Sequelize.FLOAT,
+      },
+      longitude: {
+        type: Sequelize.FLOAT,
+      },
+      zoomLevel: {
+        type: Sequelize.INTEGER,
+        defaultValue: 5,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Country extends Model {
     /**
@@ -11,17 +9,82 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Country.hasMany(models.Photo, {foreignKey: "CountryId"});
+      Country.hasMany(models.Favorite, {foreignKey: "CountryId"});
+      Country.hasOne(models.Weather, {foreignKey: "CountryId"});
     }
   }
-  Country.init({
-    name: DataTypes.STRING,
-    capital: DataTypes.STRING,
-    region: DataTypes.STRING,
-    population: DataTypes.INTEGER,
-    flagUrl: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Country',
-  });
+  Country.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Country name is required",
+          },
+          notEmpty: {
+            msg: "Country name is required",
+          },
+        },
+      },
+      capital: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Capital is required",
+          },
+          notEmpty: {
+            msg: "Capital is required",
+          },
+        },
+      },
+      region: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Region is required",
+          },
+          notEmpty: {
+            msg: "Region is required",
+          },
+        },
+      },
+      population: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Population is required",
+          },
+          isInt: {
+            msg: "Population must be a number",
+          },
+          min: {
+            args: [0],
+            msg: "Population cannot be negative",
+          },
+        },
+      },
+      flagUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Flag URL is required",
+          },
+          notEmpty: {
+            msg: "Flag URL is required",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Country",
+    }
+  );
   return Country;
 };

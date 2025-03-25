@@ -22,10 +22,19 @@ module.exports = {
         type: Sequelize.FLOAT,
       },
       humidity: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
+      },
+      windSpeed: {
+        type: Sequelize.FLOAT,
       },
       description: {
         type: Sequelize.STRING,
+      },
+      icon: {
+        type: Sequelize.STRING,
+      },
+      updatedTime: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,

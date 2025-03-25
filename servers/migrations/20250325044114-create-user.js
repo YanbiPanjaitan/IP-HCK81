@@ -11,16 +11,23 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
         unique: true,
+        validate: {
+          eitherPasswordOrGoogleId() {
+            if (!this.password && !this.google_id) {
+              throw new Error("Either password or Google ID must be provided");
+            }
+          },
+        },
       },
       password: {
         type: Sequelize.STRING,
-      },
-      role: {
-        type: Sequelize.STRING,
+        allowNull: true,
       },
       google_id: {
         type: Sequelize.STRING,

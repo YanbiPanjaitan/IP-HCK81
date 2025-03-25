@@ -11,18 +11,23 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       capital: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       region: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       population: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       flagUrl: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

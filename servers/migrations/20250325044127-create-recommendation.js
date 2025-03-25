@@ -20,8 +20,12 @@ module.exports = {
       },
       landmarkName: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
+        type: Sequelize.TEXT,
+      },
+      imageUrl: {
         type: Sequelize.STRING,
       },
       createdAt: {

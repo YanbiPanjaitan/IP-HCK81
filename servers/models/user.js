@@ -1,7 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const {Model} = require("sequelize");
+const {hashPassword} = require("../helpers/bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,17 +11,79 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Favorite, {foreignKey: "UserId"});
     }
   }
-  User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING,
-    google_id: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
+  User.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Username is required",
+          },
+          notEmpty: {
+            msg: "Username is required",
+          },
+          len: {
+            args: [1],
+            msg: "Username is required",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "Email already in use",
+        },
+        validate: {
+          notNull: {
+            msg: "Email is required",
+          },
+          notEmpty: {
+            msg: "Email is required",
+          },
+          isEmail: {
+            msg: "Email format invalid",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          eitherPasswordOrGoogleId() {
+            if (!this.password && !this.google_id) {
+              throw new Error("Either password or Google ID must be provided");
+            }
+          },
+        },
+      },
+      google_id: {
+        type: DataTypes.STRING,
+        unique: {
+          msg: "Google account already linked to another user",
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
+  User.beforeCreate((user) => {
+    if (user.password && user.password !== "") {
+      user.password = hashPassword(user.password);
+    }
   });
+
+  User.beforeUpdate((user) => {
+    if (user.changed("password") && user.password) {
+      user.password = hashPassword(user.password);
+    }
+  });
+
   return User;
 };

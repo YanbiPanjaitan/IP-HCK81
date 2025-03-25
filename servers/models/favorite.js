@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Favorite extends Model {
     /**
@@ -11,15 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Favorite.belongsTo(models.User, {foreignKey: "UserId"});
+      Favorite.belongsTo(models.Country, {foreignKey: "CountryId"});
+      Favorite.hasMany(models.Recommendation, {foreignKey: "FavoriteId"});
     }
   }
-  Favorite.init({
-    UserId: DataTypes.INTEGER,
-    CountryId: DataTypes.INTEGER,
-    notes: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Favorite',
-  });
+  Favorite.init(
+    {
+      UserId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "User ID is required",
+          },
+        },
+      },
+      CountryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Country ID is required",
+          },
+        },
+      },
+      note: {
+        type: DataTypes.TEXT,
+      },
+      visited: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      visitingDate: {
+        type: DataTypes.DATE,
+        validate: {
+          isDate: {
+            msg: "Invalid date format",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Favorite",
+    }
+  );
   return Favorite;
 };

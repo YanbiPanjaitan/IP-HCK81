@@ -27,8 +27,15 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade",
       },
-      notes: {
-        type: Sequelize.STRING,
+      note: {
+        type: Sequelize.TEXT,
+      },
+      visited: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      visitingDate: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
