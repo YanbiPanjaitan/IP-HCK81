@@ -1,40 +1,41 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Countries', {
+    await queryInterface.createTable("Countries", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       capital: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       region: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       population: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       flagUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Countries');
-  }
+    await queryInterface.dropTable("Countries");
+  },
 };
