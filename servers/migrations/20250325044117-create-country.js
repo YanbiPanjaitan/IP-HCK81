@@ -11,7 +11,6 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       capital: {
         type: Sequelize.STRING,
@@ -35,6 +34,7 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Countries");
   },

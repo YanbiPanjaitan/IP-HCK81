@@ -2,29 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Recommendations", {
+    await queryInterface.createTable("Weather", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      FavoriteId: {
+      CountryId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: "Favorites",
+          model: "Countries",
           key: "id",
         },
-        onDelete: "CASCADE",
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
-      landmarkName: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      temperature: {
+        type: Sequelize.FLOAT,
+      },
+      humidity: {
+        type: Sequelize.INTEGER,
       },
       description: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -36,7 +37,8 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Recommendations");
+    await queryInterface.dropTable("Weather");
   },
 };

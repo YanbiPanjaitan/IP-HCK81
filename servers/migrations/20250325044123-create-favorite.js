@@ -11,21 +11,21 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: "Users",
           key: "id",
         },
-        onDelete: "CASCADE",
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       CountryId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: "Countries",
           key: "id",
         },
-        onDelete: "CASCADE",
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       notes: {
         type: Sequelize.STRING,
@@ -40,6 +40,7 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Favorites");
   },
